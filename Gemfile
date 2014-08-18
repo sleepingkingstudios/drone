@@ -5,6 +5,8 @@ gem 'rails', '4.1.4'
 ### App Server ###
 
 ### Datastore ###
+gem 'mongoid',                       '~> 4.0.0'
+gem 'mongoid-sleeping_king_studios', '~> 0.7', '>= 0.7.9'
 
 ### Authentication ###
 
@@ -35,6 +37,7 @@ group :development, :test do
   gem 'spring-commands-rspec',       '~> 1.0.2'
 
   gem 'factory_girl_rails', '~> 4.4.1'
+  gem 'database_cleaner',   '~> 1.3.0'
 
   gem 'pry', '~> 0.10.0'
 end # group
