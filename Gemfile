@@ -26,6 +26,16 @@ gem 'jbuilder', '~> 2.0' # Build JSON APIs. Read more: https://github.com/rails/
 gem 'spring', :group => :development
 
 ### Testing ###
+group :development, :test do
+  gem 'rspec-rails',                 '~> 3.0.2'
+  gem 'rspec-collection_matchers',   '~> 1.0.0'
+  gem 'rspec-sleeping_king_studios', '>= 2.0.0.beta.0'
+  gem 'spring-commands-rspec',       '~> 1.0.2'
+
+  gem 'factory_girl_rails', '~> 4.4.1'
+
+  gem 'pry', '~> 0.10.0'
+end # group
 
 ### Production ###
 group :production do
