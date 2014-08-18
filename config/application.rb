@@ -1,3 +1,5 @@
+# config/application.rb
+
 require File.expand_path('../boot', __FILE__)
 
 # Pick the frameworks you want:
@@ -24,5 +26,10 @@ module Drone
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
-  end
-end
+
+    # Set FactoryGirl factories directory.
+    config.generators do |config|
+      config.factory_girl :dir => 'spec/support/factories'
+    end # config
+  end # class
+end # module
