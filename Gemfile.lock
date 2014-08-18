@@ -167,6 +167,7 @@ DEPENDENCIES
   pry (~> 0.10.0)
   rails (= 4.1.4)
   rails_12factor (~> 0.0.2)
+  rake (~> 10.3.2)
   rspec-collection_matchers (~> 1.0.0)
   rspec-rails (~> 3.0.2)
   rspec-sleeping_king_studios (>= 2.0.0.beta.0)

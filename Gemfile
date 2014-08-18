@@ -27,6 +27,8 @@ gem 'spring', :group => :development
 
 ### Testing ###
 group :development, :test do
+  gem 'rake', '~> 10.3.2' # Required for Travis-CI.
+
   gem 'rspec-rails',                 '~> 3.0.2'
   gem 'rspec-collection_matchers',   '~> 1.0.0'
   gem 'rspec-sleeping_king_studios', '>= 2.0.0.beta.0'
