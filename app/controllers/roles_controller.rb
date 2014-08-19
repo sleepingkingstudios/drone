@@ -1,8 +1,11 @@
 # app/controllers/roles_controller.rb
 
+require 'form_builders/bootstrap_horizontal_form_builder'
+
 class RolesController < ApplicationController
   before_action :build_role, :only => %i(new create)
   before_action :load_role,  :only => %i(show)
+  before_action :load_roles_collection, :only => %i(index)
 
   # GET /roles
   def index
@@ -41,6 +44,10 @@ class RolesController < ApplicationController
   def load_role
     @role = Role.find(params[:id])
   end # method load_role
+
+  def load_roles_collection
+    @roles = Role.all
+  end # method load_roles_collection
 
   def params_for_role
     params.fetch(:role, {}).permit(:company, :title)

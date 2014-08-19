@@ -8,7 +8,12 @@ RSpec.describe RolesController, :type => :controller do
     let(:role)       { create(:role, attributes) }
   end # shared_context
 
-  describe '#index' do
+  shared_context 'with many roles', :roles => :many do
+    let(:attributes) { defined?(super) ? super() : {} }
+    let(:roles)      { Array.new(3).map { create(:role, attributes) } }
+  end # shared_context
+
+  describe '#index', :roles => :many do
     def perform_action
       get :index
     end # method perform_action
@@ -18,6 +23,8 @@ RSpec.describe RolesController, :type => :controller do
 
       expect(response.status).to be == 200
       expect(response).to render_template(:index)
+
+      expect(assigns.fetch(:roles)).to be == roles
     end # it
   end # describe
 

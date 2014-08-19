@@ -1,4 +1,17 @@
 - # app/views/roles/show.html.haml
+- presenter = RolePresenter.new(@role)
 
-%h1 Roles#show
-%p  Find me at app/views/roles/show.html.haml
+%h2= presenter.label
+
+%p.col-sm-2.text-right
+  %strong Company:
+%p.col-sm-10= presenter.company
+
+%p.col-sm-2.text-right
+  %strong Title:
+%p.col-sm-10= presenter.title
+
+%p
+  = link_to roles_path do
+    %span.glyphicon.glyphicon-arrow-left
+    Back To Roles
