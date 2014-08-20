@@ -4,7 +4,7 @@ require 'form_builders/bootstrap_horizontal_form_builder'
 
 class RolesController < ApplicationController
   before_action :build_role, :only => %i(new create)
-  before_action :load_role,  :only => %i(show)
+  before_action :load_role,  :only => %i(show edit update destroy)
   before_action :load_roles_collection, :only => %i(index)
 
   # GET /roles
@@ -36,6 +36,33 @@ class RolesController < ApplicationController
   def show
 
   end # action show
+
+  # GET /roles/:id/edit
+  def edit
+
+  end # action edit
+
+  # PATCH /roles/:id
+  def update
+    if @role.update_attributes params_for_role
+      flash[:notice] = "Role successfully updated."
+
+      redirect_to(role_path @role)
+    else
+      flash[:error] = "Unable to update role."
+
+      render(:edit)
+    end # if-else
+  end # action update
+
+  # DELETE /roles/:id
+  def destroy
+    @role.destroy
+
+    flash[:notice] = "Role successfully destroyed."
+
+    redirect_to roles_path
+  end # action destroy
 
   private
 

@@ -1,7 +1,7 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
-  resources :roles, :only => %i(index new create show)
+  resources :roles
 
   root 'roles#index'
 end # routes.draw

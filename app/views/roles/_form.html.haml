@@ -2,7 +2,6 @@
 
 - presenter = RolePresenter.new(role)
 
-%h2 New Role
 = form_for role, :builder => BootstrapHorizontalFormBuilder do |form|
   = form.form_group :company do
     = form.text_field :company, :autofocus => true
@@ -13,5 +12,5 @@
   = form.form_group :urls, :label => 'URLs' do
     = form.text_area :urls
   = form.form_group do
-    = form.submit 'Create Role'
-    = form.button 'Cancel', roles_path
+    = form.submit role.persisted? ? 'Update Role' : 'Create Role'
+    = form.button 'Cancel', role.persisted? ? role_path(role) : roles_path

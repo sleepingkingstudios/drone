@@ -55,6 +55,24 @@ RSpec.describe 'routing for roles', :type => :routing do
     end # it
   end # describe
 
+  describe 'GET /roles/:id/edit' do
+    let(:id)     { generate(:id) }
+    let(:path)   { "/roles/#{id}/edit" }
+    let(:action) { 'edit' }
+
+    it 'routes to RolesController#edit' do
+      expect(:get => path).to route_to({
+        :controller => controller,
+        :action     => action,
+        :id         => id
+      }) # end expect
+    end # it
+
+    describe 'edit_role_path' do
+      it { expect(edit_role_path(id)).to be == path }
+    end # it
+  end # describe
+
   describe 'POST /roles' do
     let(:path)   { '/roles' }
     let(:action) { 'create' }
@@ -63,6 +81,34 @@ RSpec.describe 'routing for roles', :type => :routing do
       expect(:post => path).to route_to({
         :controller => controller,
         :action     => action
+      }) # end expect
+    end # it
+  end # describe
+
+  describe 'PATCH /roles/:id' do
+    let(:id)     { generate(:id) }
+    let(:path)   { "/roles/#{id}" }
+    let(:action) { 'update' }
+
+    it 'routes to RolesController#create' do
+      expect(:patch => path).to route_to({
+        :controller => controller,
+        :action     => action,
+        :id         => id
+      }) # end expect
+    end # it
+  end # describe
+
+  describe 'DELETE /roles/:id' do
+    let(:id)     { generate(:id) }
+    let(:path)   { "/roles/#{id}" }
+    let(:action) { 'destroy' }
+
+    it 'routes to RolesController#destroy' do
+      expect(:delete => path).to route_to({
+        :controller => controller,
+        :action     => action,
+        :id         => id
       }) # end expect
     end # it
   end # describe

@@ -4,6 +4,10 @@
 
 %h2= presenter.label
 
+%p
+  = link_to 'Edit Role', edit_role_path(@role), :class => 'btn btn-primary'
+  = link_to 'Delete Role', role_path(@role), :class => 'btn btn-danger', :method => :delete
+
 %p.col-sm-2.text-right
   %strong Company:
 %p.col-sm-10= presenter.company
