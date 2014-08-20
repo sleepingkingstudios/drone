@@ -54,6 +54,7 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
   def label method, text = nil, options = {}, &block
     options[:class] = concat_class options.fetch(:class, ''), 'control-label'
+
     super method, text, options, &block
   end # method label
 
@@ -63,6 +64,12 @@ class BootstrapFormBuilder < ActionView::Helpers::FormBuilder
 
     super method, options
   end # method password_field
+
+  def select method, choices = nil, options = {}, html_options = {}, &block
+    html_options[:class] = concat_class html_options.fetch(:class, ''), 'form-control'
+
+    super method, choices, options, html_options, &block
+  end # method select
 
   def submit value = nil, options = {}
     classes = %w(btn)

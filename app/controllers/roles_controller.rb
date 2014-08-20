@@ -14,11 +14,13 @@ class RolesController < ApplicationController
 
   # GET /roles/new
   def new
-
+    @role.state ||= 'open'
   end # action new
 
   # POST /roles
   def create
+    @role.state ||= 'open'
+
     if @role.save
       flash[:notice] = "Role successfully created."
 
@@ -50,7 +52,7 @@ class RolesController < ApplicationController
   end # method load_roles_collection
 
   def params_for_role
-    params.fetch(:role, {}).permit(:company, :title)
+    params.fetch(:role, {}).permit(:company, :state, :title)
   end # method params_for_role
 
   rescue_from Mongoid::Errors::DocumentNotFound do |exception|

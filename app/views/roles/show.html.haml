@@ -1,4 +1,5 @@
 - # app/views/roles/show.html.haml
+
 - presenter = RolePresenter.new(@role)
 
 %h2= presenter.label
@@ -10,6 +11,14 @@
 %p.col-sm-2.text-right
   %strong Title:
 %p.col-sm-10= presenter.title
+
+%p.col-sm-2.text-right
+  %strong State:
+%p.col-sm-10= presenter.state
+
+%p.col-sm-2.text-right
+  %strong Date Applied:
+%p.col-sm-10= presenter.applied_at
 
 %p
   = link_to roles_path do

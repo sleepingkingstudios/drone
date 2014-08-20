@@ -8,11 +8,15 @@
 %table.table
   %thead
     %tr
-      %th Title
       %th Company
+      %th Title
+      %th State
+      %th Date Applied
   %tbody
     - @roles.each do |role|
       - presenter = RolePresenter.new(role)
       %tr
         %td= link_to presenter.company, role_path(role)
         %td= presenter.title
+        %td= presenter.state
+        %td= presenter.applied_at
