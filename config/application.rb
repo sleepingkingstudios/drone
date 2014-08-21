@@ -27,6 +27,9 @@ module Drone
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # Autoload namespaced model classes.
+    config.autoload_paths += Dir[Rails.root.join('app', 'models', '{**/}')]
+
     # Set FactoryGirl factories directory.
     config.generators do |config|
       config.factory_girl :dir => 'spec/support/factories'

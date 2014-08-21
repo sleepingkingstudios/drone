@@ -4,7 +4,7 @@ class Role
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  STATES = %w(open applied closed).freeze
+  STATES = %w(open applied interviewed offered closed).freeze
 
   ### Class Methods ###
 
@@ -25,6 +25,8 @@ class Role
   ### Relations ###
 
   belongs_to :recruiter
+
+  embeds_many :events, :class_name => 'RoleEvent'
 
   ### Validations ###
 

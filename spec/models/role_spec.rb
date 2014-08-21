@@ -8,6 +8,11 @@ RSpec.describe Role, :type => :model do
     let(:attributes) { super().merge :recruiter => recruiter }
   end # shared_context
 
+  shared_context 'with many events', :events => :many do
+    let(:events)     { Array.new(3).map { build(:role_event) } }
+    let(:attributes) { super().merge :events => events }
+  end # shared_context
+
   let(:attributes) { attributes_for(:role) }
   let(:instance)   { described_class.new attributes }
 
@@ -16,12 +21,14 @@ RSpec.describe Role, :type => :model do
       expect(described_class::STATES).to contain_exactly *%w(
         applied
         closed
+        interviewed
+        offered
         open
       ) # end array
     end # it
 
     it 'is immutable' do
-      expect { described_class::STATES << 'malicious' }.to raise_error
+      expect { described_class::STATES << 'malicious' }.to raise_error RuntimeError, /can't modify/
     end # it
   end # describe
 
@@ -68,6 +75,16 @@ RSpec.describe Role, :type => :model do
       it { expect(instance.recruiter_id).to be == recruiter.id }
 
       it { expect(instance.recruiter).to be == recruiter }
+    end # context
+  end # describe
+
+  ### Relations ###
+
+  describe 'embeds_many :events' do
+    it { expect(instance).to have_reader(:events).with([]) }
+
+    context 'with many events', :events => :many do
+      it { expect(instance.events).to be == events }
     end # context
   end # describe
 
