@@ -23,12 +23,6 @@ RSpec.describe RoleInterviewEvent, :type => :model do
 
   ### Attributes ###
 
-  describe '#notes' do
-    it { expect(instance).to have_property(:notes) }
-
-    it { expect(instance.notes).to be == attributes[:notes] }
-  end # describe
-
   describe '#subtype' do
     it { expect(instance).to have_property(:subtype) }
 

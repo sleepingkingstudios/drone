@@ -19,6 +19,12 @@ RSpec.describe RoleEvent, :type => :model do
     it { expect(instance.event_at).to be == attributes[:event_at] }
   end # describe
 
+  describe '#notes' do
+    it { expect(instance).to have_property(:notes) }
+
+    it { expect(instance.notes).to be == attributes[:notes] }
+  end # describe
+
   ### Relations ###
 
   describe 'embedded_in :role' do

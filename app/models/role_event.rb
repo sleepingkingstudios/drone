@@ -7,6 +7,7 @@ class RoleEvent
   ### Attributes ###
 
   field :event_at, :type => DateTime
+  field :notes,    :type => String
 
   ### Relations ###
 

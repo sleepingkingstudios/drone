@@ -5,7 +5,6 @@ class RoleInterviewEvent < RoleEvent
 
   ### Attributes ###
 
-  field :notes,   :type => String
   field :subtype, :type => String
 
   ### Validations ###

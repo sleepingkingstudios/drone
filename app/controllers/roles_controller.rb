@@ -72,6 +72,10 @@ class RolesController < ApplicationController
 
   def load_role
     @role = Role.find(params[:id])
+  rescue Mongoid::Errors::DocumentNotFound => exception
+    flash[:error] = "Role(s) not found with id(s) #{exception.params.join(', ')}."
+
+    redirect_to(roles_path)
   end # method load_role
 
   def load_roles_collection
@@ -81,10 +85,4 @@ class RolesController < ApplicationController
   def params_for_role
     params.fetch(:role, {}).permit(:company, :recruiter_id, :state, :title)
   end # method params_for_role
-
-  rescue_from Mongoid::Errors::DocumentNotFound do |exception|
-    flash[:error] = "Role(s) not found with id(s) #{exception.params.join(', ')}."
-
-    redirect_to(roles_path)
-  end # rescue_from
 end # controller
