@@ -7,6 +7,7 @@ class Recruiter
   ### Attributes ###
 
   field :agency, :type => String
+  field :email,  :type => String
   field :name,   :type => String
 
   ### Relations ###

@@ -8,7 +8,7 @@ RSpec.describe RecruiterPresenter, :type => :decorator do
     let!(:recruiters)          { Array.new(3).map { create(:recruiter, recruiter_attributes) } }
   end # shared_context
 
-  let(:attributes)  { {} }
+  let(:attributes)  { attributes_for(:recruiter) }
   let(:recruiter)   { build(:recruiter, attributes) }
   let(:instance)    { described_class.new recruiter }
   let(:empty_value) { '<span class="light">(none)</span>' }
@@ -38,6 +38,22 @@ RSpec.describe RecruiterPresenter, :type => :decorator do
       let(:attributes) { super().merge :agency => nil }
 
       it { expect(instance.agency).to be == empty_value }
+    end # context
+  end # describe
+
+  describe '#email' do
+    let(:attributes) do
+      super().merge :email => "#{super().fetch(:name).split(' ').map(&:downcase).join('.')}@example.com"
+    end # let
+    let(:email_address) { attributes.fetch(:email) }
+    let(:email_link)    { %Q[<a href="mailto:#{email_address}">#{email_address}</a>] }
+
+    it { expect(instance).to have_reader(:email).with(email_link) }
+
+    context 'with an empty email' do
+      let(:attributes) { super().merge :email => nil }
+
+      it { expect(instance.email).to be == empty_value }
     end # context
   end # describe
 

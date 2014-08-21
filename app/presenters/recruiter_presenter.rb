@@ -17,11 +17,19 @@ class RecruiterPresenter < Presenter
     recruiter.agency.blank? ? empty_value : recruiter.agency
   end # method title
 
+  def email
+    recruiter.email.blank? ? empty_value : email_link
+  end # method email
+
   def label
     recruiter.agency.blank? ? name : "#{name} at #{agency}"
   end # method label
 
   private
+
+  def email_link
+    link_to recruiter.email, "mailto:#{recruiter.email}"
+  end # method email_link
 
   def empty_value
     content_tag(:span, '(none)', :class => 'light')

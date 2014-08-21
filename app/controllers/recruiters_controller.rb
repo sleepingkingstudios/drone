@@ -75,7 +75,7 @@ class RecruitersController < ApplicationController
   end # method load_recruiters_collection
 
   def params_for_recruiter
-    params.fetch(:recruiter, {}).permit(:agency, :name)
+    params.fetch(:recruiter, {}).permit(:agency, :email, :name)
   end # method params_for_role
 
   rescue_from Mongoid::Errors::DocumentNotFound do |exception|

@@ -7,6 +7,8 @@
     = form.text_field :name, :autofocus => true
   = form.form_group :agency do
     = form.text_field :agency
+  = form.form_group :email do
+    = form.email_field :email
   = form.form_group do
     = form.submit recruiter.persisted? ? 'Update Recruiter' : 'Create Recruiter'
     = form.button 'Cancel', recruiter.persisted? ? recruiter_path(recruiter) : recruiters_path

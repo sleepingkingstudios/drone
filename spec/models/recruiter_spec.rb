@@ -19,6 +19,12 @@ RSpec.describe Recruiter, :type => :model do
     it { expect(instance.agency).to be == attributes[:agency] }
   end # describe
 
+  describe '#email' do
+    it { expect(instance).to have_property(:email) }
+
+    it { expect(instance.email).to be == attributes[:email] }
+  end # describe
+
   describe '#name' do
     it { expect(instance).to have_property(:name) }
 
