@@ -1,4 +1,5 @@
 - # app/views/recruiters/edit.html.haml
 
-%h1 Recruiters#edit
-%p  Find me at app/views/recruiters/edit.html.haml
+%h2 Edit Recruiter
+
+= render :partial => 'form', :locals => { :recruiter => @recruiter }

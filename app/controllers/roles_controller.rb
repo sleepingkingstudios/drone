@@ -79,7 +79,7 @@ class RolesController < ApplicationController
   end # method load_roles_collection
 
   def params_for_role
-    params.fetch(:role, {}).permit(:company, :state, :title)
+    params.fetch(:role, {}).permit(:company, :recruiter_id, :state, :title)
   end # method params_for_role
 
   rescue_from Mongoid::Errors::DocumentNotFound do |exception|

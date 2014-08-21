@@ -9,6 +9,8 @@
     = form.text_field :title
   = form.form_group :state do
     = form.select :state, options_for_select(presenter.select_options_for_state, role.state)
+  = form.form_group :recruiter_id do
+    = form.select :recruiter_id, options_for_select(RecruiterPresenter.select_options_for_recruiters, role.recruiter_id)
   = form.form_group :urls, :label => 'URLs' do
     = form.text_area :urls
   = form.form_group do

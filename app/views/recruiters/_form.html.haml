@@ -1,0 +1,12 @@
+- # app/views/recruiters/_form.html.haml
+
+- presenter = RecruiterPresenter.new(recruiter)
+
+= form_for recruiter, :builder => BootstrapHorizontalFormBuilder do |form|
+  = form.form_group :name do
+    = form.text_field :name, :autofocus => true
+  = form.form_group :agency do
+    = form.text_field :agency
+  = form.form_group do
+    = form.submit recruiter.persisted? ? 'Update Recruiter' : 'Create Recruiter'
+    = form.button 'Cancel', recruiter.persisted? ? recruiter_path(recruiter) : recruiters_path

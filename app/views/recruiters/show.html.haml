@@ -1,4 +1,26 @@
 - # app/views/recruiters/show.html.haml
 
-%h1 Recruiters#show
-%p  Find me at app/views/recruiters/show.html.haml
+- presenter = RecruiterPresenter.new(@recruiter)
+
+%h2= presenter.label
+%p
+  = link_to edit_recruiter_path(@recruiter), :class => 'text-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit Recruiter
+  &nbsp;
+  = link_to recruiter_path(@recruiter), :class => 'text-danger', :method => :delete do
+    %span.glyphicon.glyphicon-trash
+    Delete Recruiter
+
+%p.col-sm-2.text-right
+  %strong Name:
+%p.col-sm-10= presenter.name
+
+%p.col-sm-2.text-right
+  %strong Agency:
+%p.col-sm-10= presenter.agency
+
+%p
+  = link_to recruiters_path do
+    %span.glyphicon.glyphicon-arrow-left
+    Back To Recruiters

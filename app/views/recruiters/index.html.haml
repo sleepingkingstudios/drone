@@ -1,4 +1,32 @@
 - # app/views/recruiters/index.html.haml
 
-%h1 Recruiters#index
-%p  Find me at app/views/recruiters/index.html.haml
+%h2 Recruiters
+%p
+  = link_to new_recruiter_path, :class => 'text-primary' do
+    %span.glyphicon.glyphicon-plus
+    Create Recruiter
+
+%table.table
+  %thead
+    %tr
+      %th Name
+      %th Agency
+      %th &nbsp;
+  %tbody
+    - @recruiters.each do |recruiter|
+      - presenter = RecruiterPresenter.new recruiter
+      %tr
+        %td= presenter.name
+        %td= presenter.agency
+        %td
+          = link_to recruiter_path(recruiter), :class => 'text-info' do
+            %span.glyphicon.glyphicon-eye-open
+            Show
+          &nbsp;
+          = link_to edit_recruiter_path(recruiter), :class => 'text-warning' do
+            %span.glyphicon.glyphicon-pencil
+            Edit
+          &nbsp;
+          = link_to recruiter_path(recruiter), :class => 'text-danger', :method => :delete do
+            %span.glyphicon.glyphicon-trash
+            Delete

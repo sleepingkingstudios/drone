@@ -14,4 +14,17 @@
 
   %body
     .container
+      %h1
+        Drone
+        %small The Job Search Assistant
+
+      %p
+        = link_to roles_path do
+          %span.glyphicon.glyphicon-road
+          Go to Roles
+      %p
+        = link_to recruiters_path do
+          %span.glyphicon.glyphicon-user
+          Go to Recruiters
+
       = yield
