@@ -1,21 +1,21 @@
-# spec/controllers/roles_controller_spec.rb
+# spec/controllers/recruiters_controller_spec.rb
 
 require 'rails_helper'
 
-RSpec.describe RolesController, :type => :controller do
-  shared_context 'with one role', :roles => :one do
-    let(:role_attributes) { defined?(super) ? super() : {} }
-    let!(:role)           { create(:role, role_attributes) }
+RSpec.describe RecruitersController, :type => :controller do
+  shared_context 'with one recruiter', :recruiters => :one do
+    let(:recruiter_attributes) { defined?(super) ? super() : {} }
+    let!(:recruiter)           { create(:recruiter, recruiter_attributes) }
   end # shared_context
 
-  shared_context 'with many roles', :roles => :many do
-    let(:role_attributes) { defined?(super) ? super() : {} }
-    let!(:roles)     { Array.new(3).map { create(:role, role_attributes) } }
+  shared_context 'with many recruiters', :recruiters => :many do
+    let(:recruiter_attributes) { defined?(super) ? super() : {} }
+    let!(:recruiters)          { Array.new(3).map { create(:recruiter, recruiter_attributes) } }
   end # shared_context
 
   let(:params) { {} }
 
-  describe '#index', :roles => :many do
+  describe '#index', :recruiters => :many do
     def perform_action
       get :index
     end # method perform_action
@@ -26,7 +26,7 @@ RSpec.describe RolesController, :type => :controller do
       expect(response.status).to be == 200
       expect(response).to render_template(:index)
 
-      expect(assigns.fetch(:roles)).to be == roles
+      expect(assigns.fetch(:recruiters)).to be == recruiters
     end # it
   end # describe
 
@@ -41,20 +41,20 @@ RSpec.describe RolesController, :type => :controller do
       expect(response.status).to be == 200
       expect(response).to render_template(:new)
 
-      expect(assigns.fetch(:role)).to be_a Role
+      expect(assigns.fetch(:recruiter)).to be_a Recruiter
     end # it
   end # describe
 
   describe '#create' do
-    let(:role_attributes) { {} }
-    let(:params)          { { :role => role_attributes } }
+    let(:recruiter_attributes) { {} }
+    let(:params)               { { :recruiter => recruiter_attributes } }
 
     def perform_action
       post :create, params
     end # method perform_action
 
     describe 'with invalid params' do
-      let(:role_attributes) { super().merge :company => nil }
+      let(:recruiter_attributes) { super().merge :name => nil }
 
       it 'renders the new template' do
         perform_action
@@ -64,31 +64,31 @@ RSpec.describe RolesController, :type => :controller do
 
         expect(request.flash[:error]).not_to be_blank
 
-        expect(assigns.fetch(:role)).to be_a Role
-        role_attributes.each do |attribute, value|
-          expect(assigns.fetch(:role).send attribute).to be == value
+        expect(assigns.fetch(:recruiter)).to be_a Recruiter
+        recruiter_attributes.each do |attribute, value|
+          expect(assigns.fetch(:recruiter).send attribute).to be == value
         end # each
       end # it
 
-      it 'does not create a role' do
-        expect { perform_action }.not_to change(Role, :count)
+      it 'does not create a recruiter' do
+        expect { perform_action }.not_to change(Recruiter, :count)
       end # it
     end # describe
 
     describe 'with valid params' do
-      let(:role_attributes) { attributes_for(:role) }
+      let(:recruiter_attributes) { attributes_for(:recruiter) }
 
-      it 'redirects to role_path' do
+      it 'redirects to recruiter_path' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(role_path(Role.last))
+        expect(response).to redirect_to(recruiter_path(Recruiter.last))
 
         expect(request.flash[:notice]).not_to be_blank
       end # it
 
-      it 'creates a role' do
-        expect { perform_action }.to change(Role, :count).by(1)
+      it 'creates a recruiter' do
+        expect { perform_action }.to change(Recruiter, :count).by(1)
       end # it
     end # describe
   end # describe
@@ -98,22 +98,22 @@ RSpec.describe RolesController, :type => :controller do
       get :show, params
     end # method perform_action
 
-    context 'without a role' do
+    context 'without a recruiter' do
       let(:id)     { generate(:id) }
       let(:params) { super().merge :id => id }
 
-      it 'redirects to roles' do
+      it 'redirects to recruiters' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(roles_path)
+        expect(response).to redirect_to(recruiters_path)
 
         expect(request.flash[:error]).not_to be_blank
       end # it
     end # context
 
-    context 'with a created role', :roles => :one do
-      let(:params) { super().merge :id => role.id }
+    context 'with a created recruiter', :recruiters => :one do
+      let(:params) { super().merge :id => recruiter.id }
 
       it 'renders the show template' do
         perform_action
@@ -121,7 +121,7 @@ RSpec.describe RolesController, :type => :controller do
         expect(response.status).to be == 200
         expect(response).to render_template(:show)
 
-        expect(assigns.fetch(:role)).to be == role
+        expect(assigns.fetch(:recruiter)).to be == recruiter
       end # it
     end # context
   end # describe
@@ -131,22 +131,22 @@ RSpec.describe RolesController, :type => :controller do
       get :edit, params
     end # method perform_action
 
-    context 'without a role' do
+    context 'without a recruiter' do
       let(:id)     { generate(:id) }
       let(:params) { super().merge :id => id }
 
-      it 'redirects to roles' do
+      it 'redirects to recruiters' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(roles_path)
+        expect(response).to redirect_to(recruiters_path)
 
         expect(request.flash[:error]).not_to be_blank
       end # it
     end # context
 
-    context 'with a created role', :roles => :one do
-      let(:params) { super().merge :id => role.id }
+    context 'with a created recruiter', :recruiters => :one do
+      let(:params) { super().merge :id => recruiter.id }
 
       it 'renders the edit template' do
         perform_action
@@ -154,7 +154,7 @@ RSpec.describe RolesController, :type => :controller do
         expect(response.status).to be == 200
         expect(response).to render_template(:edit)
 
-        expect(assigns.fetch(:role)).to be == role
+        expect(assigns.fetch(:recruiter)).to be == recruiter
       end # it
     end # context
   end # describe
@@ -164,25 +164,25 @@ RSpec.describe RolesController, :type => :controller do
       patch :update, params
     end # method perform_action
 
-    context 'without a role' do
+    context 'without a recruiter' do
       let(:id)     { generate(:id) }
       let(:params) { super().merge :id => id }
 
-      it 'redirects to roles' do
+      it 'redirects to recruiters' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(roles_path)
+        expect(response).to redirect_to(recruiters_path)
 
         expect(request.flash[:error]).not_to be_blank
       end # it
     end # context
 
-    context 'with a created role', :roles => :one do
-      let(:params) { super().merge :id => role.id, :role => role_params }
+    context 'with a created recruiter', :recruiters => :one do
+      let(:params) { super().merge :id => recruiter.id, :recruiter => recruiter_params }
 
       context 'with invalid params' do
-        let(:role_params) { { :company => nil, :title => 'Mo Zing' } }
+        let(:recruiter_params) { { :name => nil, :agency => 'Blue Sun' } }
 
         it 'renders the edit template' do
           perform_action
@@ -192,31 +192,31 @@ RSpec.describe RolesController, :type => :controller do
 
           expect(request.flash[:error]).not_to be_blank
 
-          expect(assigns.fetch(:role)).to be == role
-          role_params.each do |attribute, value|
-            expect(assigns.fetch(:role).send attribute).to be == value
+          expect(assigns.fetch(:recruiter)).to be == recruiter
+          recruiter_params.each do |attribute, value|
+            expect(assigns.fetch(:recruiter).send attribute).to be == value
           end # each
         end # it
 
-        it 'does not update the role' do
-          expect { perform_action }.not_to change { role.reload.title }
+        it 'does not update the recruiter' do
+          expect { perform_action }.not_to change { recruiter.reload.agency }
         end # it
       end # context
 
       context 'with valid params' do
-        let(:role_params) { { :company => 'Generic Fantasy Kingdom', :title => 'Evil Chancellor' } }
+        let(:recruiter_params) { { :name => 'Darth Vader', :agency => 'Galactic Empire' } }
 
-        it 'redirects to role_path' do
+        it 'redirects to recruiter_path' do
           perform_action
 
           expect(response.status).to be == 302
-          expect(response).to redirect_to role_path(role)
+          expect(response).to redirect_to recruiter_path(recruiter)
 
           expect(request.flash[:notice]).not_to be_blank
         end # it
 
-        it 'updates the role' do
-          expect { perform_action }.to change { role.reload.title }.to(role_params.fetch(:title))
+        it 'updates the recruiter' do
+          expect { perform_action }.to change { recruiter.reload.agency }.to(recruiter_params.fetch(:agency))
         end # it
       end # context
     end # context
@@ -227,38 +227,38 @@ RSpec.describe RolesController, :type => :controller do
       delete :destroy, params
     end # method perform_action
 
-    context 'without a role' do
+    context 'without a recruiter' do
       let(:id)     { generate(:id) }
       let(:params) { super().merge :id => id }
 
-      it 'redirects to roles' do
+      it 'redirects to recruiters' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(roles_path)
+        expect(response).to redirect_to(recruiters_path)
 
         expect(request.flash[:error]).not_to be_blank
       end # it
 
-      it 'does not destroy a role' do
-        expect { perform_action }.not_to change(Role, :count)
+      it 'does not destroy a recruiter' do
+        expect { perform_action }.not_to change(Recruiter, :count)
       end # it
     end # context
 
-    context 'with a created role', :roles => :one do
-      let(:params) { super().merge :id => role.id }
+    context 'with a created recruiter', :recruiters => :one do
+      let(:params) { super().merge :id => recruiter.id }
 
-      it 'redirects to roles' do
+      it 'redirects to recruiters' do
         perform_action
 
         expect(response.status).to be == 302
-        expect(response).to redirect_to(roles_path)
+        expect(response).to redirect_to(recruiters_path)
 
         expect(request.flash[:notice]).not_to be_blank
       end # it
 
-      it 'destroys the role' do
-        expect { perform_action }.to change(Role, :count).by(-1)
+      it 'destroys the recruiter' do
+        expect { perform_action }.to change(Recruiter, :count).by(-1)
       end # it
     end # context
   end # describe
