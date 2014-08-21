@@ -22,6 +22,10 @@ class Role
   field :title,      :type => String
   field :urls,       :type => Array
 
+  ### Relations ###
+
+  belongs_to :recruiter
+
   ### Validations ###
 
   validates :company, :presence => true

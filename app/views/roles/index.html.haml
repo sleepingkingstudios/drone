@@ -13,6 +13,8 @@
       %th Title
       %th State
       %th Date Applied
+      %th Recruiter
+      %th Agency
       %th &nbsp;
   %tbody
     - @roles.each do |role|
@@ -22,6 +24,8 @@
         %td= presenter.title
         %td= presenter.state
         %td= presenter.applied_at
+        %td= presenter.recruiter
+        %td= presenter.agency
         %td
           = link_to role_path(role), :class => 'text-info' do
             %span.glyphicon.glyphicon-eye-open

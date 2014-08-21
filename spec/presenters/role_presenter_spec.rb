@@ -3,9 +3,33 @@
 require 'rails_helper'
 
 RSpec.describe RolePresenter, :type => :decorator do
-  let(:attributes) { {} }
-  let(:role)       { build(:role, attributes) }
-  let(:instance)   { described_class.new role }
+  shared_context 'with one recruiter', :recruiters => :one do
+    let(:recruiter_attributes) { defined?(super) ? super() : {} }
+    let(:recruiter)            { build(:recruiter, recruiter_attributes) }
+    let(:attributes)           { super().merge :recruiter => recruiter }
+  end # shared_context
+
+  let(:attributes)  { {} }
+  let(:role)        { build(:role, attributes) }
+  let(:instance)    { described_class.new role }
+  let(:empty_value) { '<span class="light">(none)</span>' }
+
+  describe '#agency' do
+    it { expect(instance).to have_reader(:agency).with(empty_value) }
+
+    context 'with a recruiter', :recruiters => :one do
+      let(:recruiter_attributes) { { :agency => nil } }
+
+      it { expect(instance).to have_reader(:agency).with(empty_value) }
+
+      context 'with an agency' do
+        let(:agency)               { "Dirk Gently's Holistic Detective Agency" }
+        let(:recruiter_attributes) { { :agency => agency } }
+
+        it { expect(instance).to have_reader(:agency).with(agency) }
+      end # context
+    end # context
+  end # describe
 
   describe '#applied_at' do
     let(:applied_at) { 1.days.ago }
@@ -16,7 +40,7 @@ RSpec.describe RolePresenter, :type => :decorator do
     context 'with an undefined date' do
       let(:attributes) { super().merge :applied_at => nil }
 
-      it { expect(instance.applied_at).to be == '<span class="light">(none)</span>' }
+      it { expect(instance.applied_at).to be == empty_value }
     end # context
   end # describe
 
@@ -35,6 +59,14 @@ RSpec.describe RolePresenter, :type => :decorator do
       let(:label)      { role.company }
 
       it { expect(instance.label).to be == label }
+    end # context
+  end # describe
+
+  describe '#recruiter' do
+    it { expect(instance).to have_reader(:recruiter).with(empty_value) }
+
+    context 'with a recruiter', :recruiters => :one do
+      it { expect(instance).to have_reader(:recruiter).with(recruiter.name) }
     end # context
   end # describe
 
@@ -68,7 +100,7 @@ RSpec.describe RolePresenter, :type => :decorator do
     context 'with an empty title' do
       let(:attributes) { super().merge :title => nil }
 
-      it { expect(instance.title).to be == '<span class="light">(none)</span>' }
+      it { expect(instance.title).to be == empty_value }
     end # context
   end # describe
 end # describe

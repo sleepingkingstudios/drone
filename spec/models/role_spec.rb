@@ -3,6 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Role, :type => :model do
+  shared_context 'with one recruiter', :recruiters => :one do
+    let(:recruiter)  { build(:recruiter) }
+    let(:attributes) { super().merge :recruiter => recruiter }
+  end # shared_context
+
   let(:attributes) { attributes_for(:role) }
   let(:instance)   { described_class.new attributes }
 
@@ -50,6 +55,20 @@ RSpec.describe Role, :type => :model do
     it { expect(instance).to have_property(:urls) }
 
     it { expect(instance.urls).to be == attributes[:urls] }
+  end # describe
+
+  ### Relations ###
+
+  describe 'belongs_to :recruiter' do
+    it { expect(instance).to have_reader(:recruiter).with(nil) }
+
+    it { expect(instance).to have_reader(:recruiter_id).with(nil) }
+
+    context 'with one recruiter', :recruiters => :one do
+      it { expect(instance.recruiter_id).to be == recruiter.id }
+
+      it { expect(instance.recruiter).to be == recruiter }
+    end # context
   end # describe
 
   ### Validation ###
