@@ -1,8 +1,10 @@
 - # app/views/roles/index.html.haml
 
 %h2 Roles
-
-%p= link_to 'Create Role', new_role_path, :class => 'btn btn-primary'
+%p
+  = link_to new_role_path, :class => 'text-primary' do
+    %span.glyphicon.glyphicon-plus
+    Create Role
 
 %table.table
   %thead
@@ -11,11 +13,24 @@
       %th Title
       %th State
       %th Date Applied
+      %th &nbsp;
   %tbody
     - @roles.each do |role|
       - presenter = RolePresenter.new(role)
       %tr
-        %td= link_to presenter.company, role_path(role)
+        %td= presenter.company
         %td= presenter.title
         %td= presenter.state
         %td= presenter.applied_at
+        %td
+          = link_to role_path(role), :class => 'text-info' do
+            %span.glyphicon.glyphicon-eye-open
+            Show
+          &nbsp;
+          = link_to edit_role_path(role), :class => 'text-warning' do
+            %span.glyphicon.glyphicon-pencil
+            Edit
+          &nbsp;
+          = link_to role_path(role), :class => 'text-danger', :method => :delete do
+            %span.glyphicon.glyphicon-trash
+            Delete

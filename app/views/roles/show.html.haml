@@ -3,10 +3,14 @@
 - presenter = RolePresenter.new(@role)
 
 %h2= presenter.label
-
 %p
-  = link_to 'Edit Role', edit_role_path(@role), :class => 'btn btn-primary'
-  = link_to 'Delete Role', role_path(@role), :class => 'btn btn-danger', :method => :delete
+  = link_to edit_role_path(@role), :class => 'text-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit Role
+  &nbsp;
+  = link_to role_path(@role), :class => 'text-danger', :method => :delete do
+    %span.glyphicon.glyphicon-trash
+    Delete Role
 
 %p.col-sm-2.text-right
   %strong Company:
