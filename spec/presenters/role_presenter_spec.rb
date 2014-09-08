@@ -70,6 +70,18 @@ RSpec.describe RolePresenter, :type => :decorator do
     end # context
   end # describe
 
+  describe '#recruiter_link' do
+    it { expect(instance).to have_reader(:recruiter_link).with(empty_value) }
+
+    context 'with a recruiter', :recruiters => :one do
+      let(:expected) do
+        %{<a href="/recruiters/#{recruiter.id}"><span class="glyphicon glyphicon-user"></span> #{recruiter.name}</a>}
+      end # let
+
+      it { expect(instance.recruiter_link).to be == expected }
+    end # context
+  end # describe
+
   describe '#role' do
     it { expect(instance).to have_reader(:role).with(role) }
   end # describe

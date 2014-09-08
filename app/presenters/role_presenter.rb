@@ -1,6 +1,8 @@
 # app/presenters/role_presenter.rb
 
 class RolePresenter < Presenter
+  include Rails.application.routes.url_helpers
+
   alias_method :role, :object
 
   delegate :company, :to => :role
@@ -20,6 +22,15 @@ class RolePresenter < Presenter
   def recruiter
     role.recruiter.blank? ? empty_value : role.recruiter.name
   end # method recruiter
+
+  def recruiter_link
+    if role.recruiter.blank?
+      empty_value
+    else
+      content = "#{content_tag(:span, nil, :class => 'glyphicon glyphicon-user')} #{role.recruiter.name}".html_safe
+      link_to content, recruiter_path(role.recruiter.id)
+    end # if-else
+  end # method recruiter_link
 
   def select_options_for_state
     Role::STATES.map { |value| [value.capitalize, value] }
