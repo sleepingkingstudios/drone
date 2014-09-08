@@ -1,0 +1,29 @@
+- # app/views/role_events/_table.html.haml
+
+%table.table
+  %thead
+    %tr
+      %th Date
+      %th Type
+      %th &nbsp;
+  %tbody
+    - if events.blank?
+      %tr
+        %td{ :colspan => 3 } There are no events associated with this role.
+    - events.each do |event|
+      %tr
+        - presenter = present(event)
+        %td= presenter.event_at
+        %td= presenter.type
+        %td
+          = link_to role_event_path(event.role, event), :class => 'text-info' do
+            %span.glyphicon.glyphicon-eye-open
+            Show
+          &nbsp;
+          = link_to edit_role_event_path(event.role, event), :class => 'text-warning' do
+            %span.glyphicon.glyphicon-pencil
+            Edit
+          &nbsp;
+          = link_to role_event_path(event.role, event), :class => 'text-danger', :method => :delete do
+            %span.glyphicon.glyphicon-trash
+            Delete

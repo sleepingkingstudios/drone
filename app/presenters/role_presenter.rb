@@ -1,8 +1,6 @@
 # app/presenters/role_presenter.rb
 
 class RolePresenter < Presenter
-  include Rails.application.routes.url_helpers
-
   alias_method :role, :object
 
   delegate :company, :to => :role

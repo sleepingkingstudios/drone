@@ -1,4 +1,8 @@
 - # app/views/role_events/new.html.haml
 
-%h1 RoleEvents#new
-%p  Find me at app/views/role_events/new.html.haml
+%h2= present(@role).label
+
+- presenter = present(@event)
+%h3= "New #{presenter.type} Event"
+
+= render :partial => "role_events/forms/#{@event._type.underscore}_form", :locals => { :role => @role, :event => @event, :presenter => presenter }

@@ -2,6 +2,7 @@
 
 class Presenter
   include ActionView::Helpers
+  include Rails.application.routes.url_helpers
 
   def initialize object
     @object = object

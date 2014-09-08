@@ -1,4 +1,21 @@
 - # app/views/role_events/show.html.haml
 
-%h1 RoleEvents#show
-%p  Find me at app/views/role_events/show.html.haml
+%h2= present(@role).label
+
+- presenter = present(@event)
+%h3= "#{presenter.type} Event"
+%p
+  = link_to edit_role_event_path(@role, @event), :class => 'text-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit Event
+  &nbsp;
+  = link_to role_event_path(@role, @event), :class => 'text-danger', :method => :delete do
+    %span.glyphicon.glyphicon-trash
+    Delete Event
+
+= render :partial => "role_events/fields/#{@event._type.underscore}_fields", :locals => { :role => @role, :event => @event, :presenter => presenter }
+
+%p
+  = link_to role_path(@role) do
+    %span.glyphicon.glyphicon-arrow-left
+    Back To Role

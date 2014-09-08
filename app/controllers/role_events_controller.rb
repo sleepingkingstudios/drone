@@ -20,7 +20,7 @@ class RoleEventsController < ApplicationController
     if @event.save
       flash[:notice] = "Event successfully created."
 
-      redirect_to(role_path @role)
+      redirect_to(role_event_path @role, @event)
     else
       flash[:error] = "Unable to create event."
 
@@ -74,7 +74,18 @@ class RoleEventsController < ApplicationController
   end # method event_class
 
   def event_type
-    @event.try(:_type).blank? ? params.fetch(:role_event, {}).fetch(:type, nil) : @event._type
+    if !@event.try(:_type).blank?
+      @event._type
+    elsif params.fetch(:role_event, {}).key?(:_type)
+      params.fetch(:role_event, {}).fetch(:_type)
+    elsif params.fetch(:event_type, false)
+      raw_type = params.fetch(:event_type)
+      if raw_type =~ /\ARole\w+Event\z/
+        raw_type
+      else
+        "Role#{raw_type.capitalize}Event"
+      end # if-else
+    end # if-elsif-else
   end # method event_type
 
   def load_event

@@ -15,7 +15,7 @@
       %th &nbsp;
   %tbody
     - @recruiters.each do |recruiter|
-      - presenter = RecruiterPresenter.new recruiter
+      - presenter = present(recruiter)
       %tr
         %td= presenter.name
         %td= presenter.agency

@@ -1,6 +1,6 @@
 - # app/views/roles/_form.html.haml
 
-- presenter = RolePresenter.new(role)
+- presenter = present(role)
 
 = form_for role, :builder => BootstrapHorizontalFormBuilder do |form|
   = form.form_group :company do

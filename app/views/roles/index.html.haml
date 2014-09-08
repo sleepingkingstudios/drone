@@ -18,7 +18,7 @@
       %th &nbsp;
   %tbody
     - @roles.each do |role|
-      - presenter = RolePresenter.new(role)
+      - presenter = present(role)
       %tr
         %td= presenter.company
         %td= presenter.title

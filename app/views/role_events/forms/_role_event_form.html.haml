@@ -1,0 +1,11 @@
+- # app/views/role_events/forms/_role_event_form.html.haml
+
+= form_for event, :builder => BootstrapHorizontalFormBuilder do |form|
+  = form.hidden_field :_type
+
+  = form.form_group :notes do
+    = form.text_area :notes
+
+  = form.form_group do
+    = form.submit event.persisted? ? 'Update Event' : 'Create Event'
+    = form.button 'Cancel', event.persisted? ? role_event_path(role, event) : role_path(role)

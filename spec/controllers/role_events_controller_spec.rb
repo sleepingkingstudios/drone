@@ -86,6 +86,26 @@ RSpec.describe RoleEventsController, :type => :controller do
         expect(assigns.fetch(:role)).to be == role
         expect(assigns.fetch(:event)).to be_a RoleEvent
       end # it
+
+      context 'with a specified short type' do
+        let(:params) { super().merge :event_type => 'interview' }
+
+        it 'sets the event type' do
+          perform_action
+
+          expect(assigns.fetch(:event)).to be_a RoleInterviewEvent
+        end # it
+      end # it
+
+      context 'with a specified full type' do
+        let(:params) { super().merge :event_type => 'RoleInterviewEvent' }
+
+        it 'sets the event type' do
+          perform_action
+
+          expect(assigns.fetch(:event)).to be_a RoleInterviewEvent
+        end # it
+      end # it
     end # context
   end # describe
 
@@ -101,7 +121,7 @@ RSpec.describe RoleEventsController, :type => :controller do
 
     context 'with a created role', :roles => :one do
       describe 'with invalid params for an interview' do
-        let(:event_attributes) { super().merge :type => 'RoleInterviewEvent', :subtype => nil }
+        let(:event_attributes) { super().merge :_type => 'RoleInterviewEvent', :subtype => nil }
 
         it 'renders the new template' do
           perform_action
@@ -113,7 +133,7 @@ RSpec.describe RoleEventsController, :type => :controller do
 
           expect(assigns.fetch(:role)).to be == role
           expect(assigns.fetch(:event)).to be_a RoleInterviewEvent
-          event_attributes.reject { |attribute, _| attribute == :type }.each do |attribute, value|
+          event_attributes.each do |attribute, value|
             expect(assigns.fetch(:event).send attribute).to be == value
           end # each
         end # it
@@ -124,13 +144,13 @@ RSpec.describe RoleEventsController, :type => :controller do
       end # describe
 
       describe 'with valid params for an interview' do
-        let(:event_attributes) { super().merge(attributes_for(:role_interview_event)).merge :type => 'RoleInterviewEvent' }
+        let(:event_attributes) { super().merge(attributes_for(:role_interview_event)).merge :_type => 'RoleInterviewEvent' }
 
         it 'redirects to role_path' do
           perform_action
 
           expect(response.status).to be == 302
-          expect(response).to redirect_to(role_path(role))
+          expect(response).to redirect_to(role_event_path(role, assigns.fetch(:event)))
 
           expect(request.flash[:notice]).not_to be_blank
         end # it

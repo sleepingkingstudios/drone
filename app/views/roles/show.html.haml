@@ -1,6 +1,6 @@
 - # app/views/roles/show.html.haml
 
-- presenter = RolePresenter.new(@role)
+- presenter = present(@role)
 
 %h2= presenter.label
 %p
@@ -36,6 +36,16 @@
   %strong Date Applied:
 %p.col-sm-10= presenter.applied_at
 
+%h3 Events
+
+%p
+  = link_to new_role_event_path(@role) + '?event_type=interview', :class => 'text-primary' do
+    %span.glyphicon.glyphicon-plus
+    Create Interview Event
+
+= render :partial => 'role_events/table', :locals => { :events => @role.events }
+
+%br
 %p
   = link_to roles_path do
     %span.glyphicon.glyphicon-arrow-left

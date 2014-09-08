@@ -1,6 +1,6 @@
 - # app/views/recruiters/_form.html.haml
 
-- presenter = RecruiterPresenter.new(recruiter)
+- presenter = present(recruiter)
 
 = form_for recruiter, :builder => BootstrapHorizontalFormBuilder do |form|
   = form.form_group :name do
